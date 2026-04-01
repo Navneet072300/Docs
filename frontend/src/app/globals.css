@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+/* Tiptap Editor Styles */
+.tiptap-editor {
+  min-height: calc(100vh - 140px);
+  padding: 96px 100px;
+  background: white;
+  width: 816px;
+  min-width: 816px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  outline: none;
+  font-size: 11pt;
+  line-height: 1.5;
+  color: #202124;
+}
+
+.tiptap-editor:focus {
+  outline: none;
+}
+
+.tiptap-editor h1 { font-size: 26px; font-weight: 400; margin: 16px 0 8px; color: #202124; }
+.tiptap-editor h2 { font-size: 20px; font-weight: 400; margin: 14px 0 6px; color: #202124; }
+.tiptap-editor h3 { font-size: 16px; font-weight: 600; margin: 12px 0 4px; color: #202124; }
+.tiptap-editor h4 { font-size: 14px; font-weight: 600; margin: 10px 0 4px; }
+.tiptap-editor p { margin: 4px 0; }
+.tiptap-editor p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+.tiptap-editor ul, .tiptap-editor ol { padding-left: 24px; margin: 4px 0; }
+.tiptap-editor li { margin: 2px 0; }
+.tiptap-editor blockquote {
+  border-left: 4px solid #e0e0e0;
+  padding-left: 16px;
+  margin: 8px 0;
+  color: #5f6368;
+}
+.tiptap-editor code {
+  background: #f1f3f4;
+  border-radius: 3px;
+  padding: 2px 5px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.9em;
+}
+.tiptap-editor pre {
+  background: #f1f3f4;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 8px 0;
+  overflow-x: auto;
+}
+.tiptap-editor pre code { background: none; padding: 0; }
+.tiptap-editor a { color: #1a73e8; text-decoration: underline; }
+.tiptap-editor mark { background: #fbf719; border-radius: 2px; padding: 0 2px; }
+.tiptap-editor hr { border: none; border-top: 2px solid #e0e0e0; margin: 16px 0; }
+
+/* Collaboration cursors */
+.collaboration-cursor__caret {
+  border-left: 1px solid;
+  border-right: 1px solid;
+  margin-left: -1px;
+  margin-right: -1px;
+  pointer-events: none;
+  position: relative;
+  word-break: normal;
+}
+.collaboration-cursor__label {
+  border-radius: 3px 3px 3px 0;
+  color: #fff;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  left: -1px;
+  line-height: normal;
+  padding: 1px 5px;
+  position: absolute;
+  top: -1.4em;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* Table styles */
+.tiptap-editor table {
+  border-collapse: collapse;
+  margin: 8px 0;
+  width: 100%;
+}
+.tiptap-editor th, .tiptap-editor td {
+  border: 1px solid #e0e0e0;
+  padding: 8px 12px;
+  vertical-align: top;
+}
+.tiptap-editor th { background: #f1f3f4; font-weight: 600; }
+
+/* Task list */
+.tiptap-editor ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+}
+.tiptap-editor ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.tiptap-editor ul[data-type="taskList"] li input[type="checkbox"] {
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+
+/* Toolbar tooltip */
+.toolbar-btn {
+  @apply p-1.5 rounded hover:bg-gray-100 text-gray-700 flex items-center justify-center transition-colors;
+  min-width: 28px;
+  height: 28px;
+}
+.toolbar-btn.active {
+  @apply bg-blue-100 text-blue-700;
+}
+.toolbar-btn:disabled {
+  @apply opacity-40 cursor-not-allowed;
+}
