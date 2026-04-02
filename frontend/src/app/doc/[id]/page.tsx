@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { api } from '@/lib/api'
@@ -7,6 +7,7 @@ import DocHeader from '@/components/Header/DocHeader'
 import Editor from '@/components/Editor/Editor'
 import CommentsSidebar from '@/components/Sidebar/CommentsSidebar'
 import { Loader2 } from 'lucide-react'
+import type { Editor as TiptapEditor } from '@tiptap/react'
 
 export interface DocData {
   id: string
@@ -27,9 +28,11 @@ export default function DocPage() {
   const [loading, setLoading] = useState(true)
   const [showComments, setShowComments] = useState(false)
   const [wordCount, setWordCount] = useState(0)
+  // Ref so DocHeader menus can call editor commands without a re-render
+  const editorRef = useRef<TiptapEditor | null>(null)
 
   useEffect(() => {
-    if (authLoading) return          // wait for token verification
+    if (authLoading) return
     if (!user) { router.replace('/'); return }
     api.get(`/documents/${docId}`)
       .then(data => { setDoc(data); setLoading(false) })
@@ -39,9 +42,7 @@ export default function DocPage() {
   const updateTitle = async (title: string) => {
     if (!doc) return
     setDoc(prev => prev ? { ...prev, title } : null)
-    try {
-      await api.patch(`/documents/${docId}`, { title })
-    } catch {}
+    try { await api.patch(`/documents/${docId}`, { title }) } catch {}
   }
 
   if (authLoading || loading) return (
@@ -53,7 +54,7 @@ export default function DocPage() {
     </div>
   )
 
-  if (!doc) return null
+  if (!doc || !user) return null
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
@@ -64,6 +65,7 @@ export default function DocPage() {
         onToggleComments={() => setShowComments(v => !v)}
         showComments={showComments}
         wordCount={wordCount}
+        editorRef={editorRef}
       />
 
       <div className="flex flex-1 overflow-hidden">
@@ -72,6 +74,7 @@ export default function DocPage() {
             docId={docId}
             user={user}
             onWordCountChange={setWordCount}
+            editorRef={editorRef}
           />
         </div>
 

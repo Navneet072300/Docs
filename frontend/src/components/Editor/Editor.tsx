@@ -34,6 +34,7 @@ interface EditorProps {
   docId: string;
   user: { id: string; name: string; email: string; avatar_color?: string };
   onWordCountChange?: (count: number) => void;
+  editorRef?: { current: any };
 }
 
 interface CollabInstances {
@@ -45,6 +46,7 @@ export default function Editor({
   docId,
   user,
   onWordCountChange,
+  editorRef,
 }: EditorProps) {
   // Initialize Y.Doc + WebsocketProvider synchronously so they're ready when
   // useEditor runs. The provider is created on first render (client only).
@@ -127,7 +129,15 @@ export default function Editor({
       const words = editor.storage.characterCount.words();
       onWordCountChange?.(words);
     },
+    onCreate: ({ editor }) => {
+      if (editorRef) editorRef.current = editor;
+    },
   });
+
+  // Keep ref in sync if editor instance changes
+  useEffect(() => {
+    if (editorRef && editor) editorRef.current = editor;
+  }, [editor, editorRef]);
 
   return (
     <div className="flex flex-col w-[816px]">
