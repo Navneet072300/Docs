@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+frontend/.next/
+frontend/out/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+backend/.env
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+
+# TypeScript
+*.tsbuildinfo
+
+# Misc
+.turbo/
