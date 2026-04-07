@@ -2,6 +2,8 @@
 
 A full-featured, Google Docs-style collaborative document editor built with a modern stack. Multiple users can edit the same document simultaneously with real-time cursor tracking, powered by CRDT (Conflict-free Replicated Data Types).
 
+![Docs Editor Screenshot](image.png)
+
 ---
 
 ## Features
